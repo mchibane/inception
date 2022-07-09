@@ -1,0 +1,17 @@
+version: "2.6"
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+
+  mariadb:
+    image: mariadb
+    ports:
+      - "3306:3306"
+
+  wordpress:
+    image: wordpress
+    ports:
+      - "9000:9000"
