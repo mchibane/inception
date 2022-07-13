@@ -1,17 +1,26 @@
-version: "2.6"
-
 services:
-  nginx:
-    image: nginx
-    ports:
-      - "80:80"
-
-  mariadb:
-    image: mariadb
+  database:
+    container_name: database
+    build: requirements/mariadb
+    image: mariadb:inception
     ports:
       - "3306:3306"
+    networks:
+      - inception-network
+    environment:
+      - "MYSQL_ROOT_PW=${DB_ROOT_PW}"
+      - "MYSQL_USER=${DB_USER}"
+      - "MYSQL_USER_PW=${DB_USER_PW}"
+      - "MYSQL_DB_NAME=${DB_NAME}"
 
-  wordpress:
-    image: wordpress
+  server:
+    container_name: nginx_serv
+    build: requirements/nginx
+    image: nginx:inception
     ports:
-      - "9000:9000"
+      - "443:443"
+    networks:
+      - inception-network
+
+networks:
+  inception-network:
