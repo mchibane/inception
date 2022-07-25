@@ -8,6 +8,7 @@ RUN apt update -y && apt install -y mariadb-server mariadb-client \
 
 COPY ./conf/db_init.sh /usr/local/bin/
 
+EXPOSE 3306
 ENTRYPOINT ["db_init.sh"]
 
 CMD ["mysqld", "--bind-address=0.0.0.0"]
