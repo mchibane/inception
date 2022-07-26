@@ -2,7 +2,7 @@
 
 if [ -f /var/www/html/.installed ]
 then
-	echo "CACA"
+	echo "Wordpress installed!"
 else
 	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp
 	chmod +x /usr/local/bin/wp
@@ -13,6 +13,7 @@ else
 	wp core install --path=/var/www/html --allow-root --url=$WP_URL --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_email=$WP_ADMIN_EMAIL --admin_password=$WP_ADMIN_PW
 	wp user create $WP_USER $WP_USER_EMAIL --role='author' --user_pass=$WP_USER_PW --path=/var/www/html --allow-root
 	touch /var/www/html/.installed
+	echo "Wordpress installed!"
 fi
 
 exec "$@"

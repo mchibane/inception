@@ -1,31 +1,25 @@
-COMPOSE = srcs/docker-compose.yml
+COMP_DIR	=	srcs/docker-compose.yml
+DOCK_COMP	=	docker compose
 
-all: run
+all: build
 
-run: 
-	@echo "Building volume directories ..."
-	@sudo mkdir -p ~/data/wordpress
-	@sudo mkdir -p ~/data/mysql
-	@echo "Building containers ..."
-	@docker compose -f $(COMPOSE) --verbose up --build
-
-up: 
-	@echo "Building volume directories ..."
+build: 
+	@echo "Building local volume directories ..."
 	@sudo mkdir -p /home/mchibane/data/wordpress
 	@sudo mkdir -p /home/mchibane/data/mysql
 	@echo "Building containers ..."
-	@docker compose -f $(COMPOSE) up -d --build
+	@$(DOCK_COMP) -f $(COMP_DIR) --verbose up --build
 
-#up: 
-#	@echo "Building volume directories ..."
-#	@sudo mkdir -p /home/mlebard/data/wordpress
-#	@sudo mkdir -p /home/mlebard/data/mysql
-#	@echo "Building containers ..."
-#	@docker compose -f $(COMPOSE) --verbose up
+stop:
+	@echo "Stopping containers ..."
+	@$(DOCK_COMP) -f $(COMP_DIR) stop 
+	@echo "Containers stopped!"
 
 clean: 	
 	@echo "Stopping containers ..."
-	@docker compose -f $(COMPOSE) down
+	@$(DOCK_COMP) -f $(COMP_DIR) down
+	@echo "Deleting all containers, images, networks and volumes..."
 	@docker system prune -a -f --volumes
-	@sudo rm -rf ~/data/wordpress
-	@sudo rm -rf ~/data/mysql
+	@echo "Deleting local volume directories ..."
+	@sudo rm -rf /home/mchibane/data/wordpress
+	@sudo rm -rf /home/mchibane/data/mysql
